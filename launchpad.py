@@ -4,6 +4,10 @@
 # In[16]:
 
 
+import numpy as np
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.utils import load_img, img_to_array
+from keras.models import load_model
 import keras
 from keras.utils import np_utils
 from keras.datasets import cifar10
@@ -44,14 +48,15 @@ strategy = tf.distribute.MirroredStrategy()
 print('Number of devices: {}'.format(strategy.num_replicas_in_sync))
 with strategy.scope():
     model = Sequential()
-    model.add(Conv2D(32, (3,3), padding="same", activation="relu", input_shape=(32,32,3)))
-    model.add(Conv2D(32, (3,3), activation="relu"))
-    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Conv2D(32, (3, 3), padding="same",
+              activation="relu", input_shape=(32, 32, 3)))
+    model.add(Conv2D(32, (3, 3), activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
-    model.add(Conv2D(64, (3,3), padding="same", activation="relu"))
-    model.add(Conv2D(64, (3,3), padding="same", activation="relu"))
-    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
+    model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
@@ -66,8 +71,10 @@ with strategy.scope():
 
 
 # Start Training
-model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
-model.fit(x_train, y_train, batch_size=32, epochs=30, validation_data=(x_test, y_test), shuffle=True)
+model.compile(loss="categorical_crossentropy",
+              optimizer="adam", metrics=["accuracy"])
+model.fit(x_train, y_train, batch_size=32, epochs=30,
+          validation_data=(x_test, y_test), shuffle=True)
 
 
 # In[9]:
@@ -82,10 +89,6 @@ model.save('/results/cifar_model2.h5')
 # In[1]:
 
 
-from keras.models import load_model
-from tensorflow.keras.utils import load_img, img_to_array
-from tensorflow.keras.preprocessing import image
-import numpy as np
 # load newly trained model
 inference_model = load_model("/results/cifar_model2.h5")
 
@@ -93,8 +96,9 @@ inference_model = load_model("/results/cifar_model2.h5")
 # In[3]:
 
 
-class_labels = ["Plane", "Car", "Bird", "Cat", "Deer", "Dog", "Frog", "Horse", "Boat", "Truck"]
-img = image.load_img("/mnt/dataset/validation/frog.jpg", target_size=(32,32))
+class_labels = ["Plane", "Car", "Bird", "Cat",
+                "Deer", "Dog", "Frog", "Horse", "Boat", "Truck"]
+img = image.load_img("/mnt/data/validation/frog.jpg", target_size=(32, 32))
 image_to_test = image.img_to_array(img)/255
 list_of_images = np.expand_dims(image_to_test, axis=0)
 results = inference_model.predict(list_of_images)
@@ -105,4 +109,3 @@ class_likelihood = single_result[most_likely_result]
 
 class_label = class_labels[most_likely_result]
 print("This image is a {} - Likelihood {:2f}".format(class_label, class_likelihood))
-
