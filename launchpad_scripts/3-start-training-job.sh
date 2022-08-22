@@ -13,4 +13,4 @@ training_workspace_id=`grep 'Successfully created workspace with ID:' training_w
 validation_dataset_id=`grep 'Dataset ID:' validation_dataset_output.log | awk '{print $3}'`
 
 # Start a job with a tensorflow image
-ngc batch run --name ${job_name} --instance dgxa100.40g.1.norm --image "nvidia/tensorflow:22.07-tf2-py3" --workspace ${training_workspace_id}:/mnt/workspace/training:RW --datasetid ${training_dataset_id}:/mnt/data/training --datasetid ${validation_dataset_id}:/mnt/data/validation --commandline "${command_line}" --result /results 
+ngc batch run --name ${job_name} --instance dgx1v.32g.4.norm --image "nvidia/tensorflow:22.07-tf2-py3" --workspace ${training_workspace_id}:/mnt/workspace/training:RW --datasetid ${training_dataset_id}:/mnt/data/training --datasetid ${validation_dataset_id}:/mnt/data/validation --commandline "${command_line}" --result /results 
