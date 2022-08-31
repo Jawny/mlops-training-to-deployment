@@ -82,30 +82,3 @@ model.fit(x_train, y_train, batch_size=32, epochs=30,
 
 # Save Model
 model.save('/results/cifar.savedmodel')
-
-
-# # Inference
-
-# In[1]:
-
-
-# load newly trained model
-inference_model = load_model("/results/cifar_model2.h5")
-
-
-# In[3]:
-
-
-class_labels = ["Plane", "Car", "Bird", "Cat",
-                "Deer", "Dog", "Frog", "Horse", "Boat", "Truck"]
-img = image.load_img("/mnt/data/validation/frog.jpg", target_size=(32, 32))
-image_to_test = image.img_to_array(img)/255
-list_of_images = np.expand_dims(image_to_test, axis=0)
-results = inference_model.predict(list_of_images)
-single_result = results[0]
-most_likely_result = int(np.argmax(single_result))
-
-class_likelihood = single_result[most_likely_result]
-
-class_label = class_labels[most_likely_result]
-print("This image is a {} - Likelihood {:2f}".format(class_label, class_likelihood))
