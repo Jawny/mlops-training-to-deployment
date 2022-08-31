@@ -81,7 +81,7 @@ model.fit(x_train, y_train, batch_size=32, epochs=30,
 
 
 # Save Model
-model.save('/results/cifar_model2.h5')
+model.save('/results/cifar.savedmodel')
 
 
 # # Inference

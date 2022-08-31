@@ -1,0 +1,15 @@
+Calculating dataset size and file count.
+.
+Checking available space.
+Attempting to create the dataset.
+Uploaded 0 B, 0/1 files in 1s, Avg Upload speed: 0 B/s, Curr Upload Speed: 0 B/s                 
+----------------------------------------------------
+Dataset ID: 107899
+Upload status: Completed
+Uploaded local path (dataset): /Users/joliao/work/code/mlops-training-to-deployment/validation_dataset
+Total files uploaded: 1
+Total transferred: 7.19 KB
+Started at: 2022-08-23 10:39:14
+Completed at: 2022-08-23 10:39:16
+Duration taken: 2s
+----------------------------------------------------

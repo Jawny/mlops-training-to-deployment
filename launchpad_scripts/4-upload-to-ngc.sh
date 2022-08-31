@@ -15,8 +15,8 @@ upload_result=`grep "Error:" ngc-upload.log`
 # If there is an error with the upload, upload again as v1 but this time create the model first
 if grep -R "Error:" ngc-upload.log
 then
-    ngc registry model create egxdefault/${model_name} --application joliao-demo-app --framework pytorch --format ProtoText --precision FP16 --short-desc "demo"
-    ngc registry model upload-version egxdefault/${model_name}:v1 --source ${source_path}
+    ngc registry model create egxdefault/${model_name} --application joliao-demo-app --framework tensorflow2 --format SavedModel --precision FP32 --short-desc "demo"
+    ngc registry model upload-version egxdefault/${model_name}:1 --source ${source_path}
 else
     echo "pass"
 fi
